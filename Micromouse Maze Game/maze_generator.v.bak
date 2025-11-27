@@ -1,0 +1,108 @@
+`default_nettype none
+// -------------------------------------------------------------------
+// Fixed (static) 25x25 maze generator for DE1-SoC Micromouse game
+// Drop-in replacement for your prior maze_generator
+// - PATH = 1, WALL = 0
+// - Same ports/name so you can plug-and-play
+// - seed is ignored (deterministic maze)
+// -------------------------------------------------------------------
+module maze_generator (
+    input  wire        clk,
+    input  wire        reset,
+    input  wire [15:0] seed,   // unused, kept for interface compatibility
+    output reg         done,
+    output reg [624:0] maze    // bit i = PATH(1)/WALL(0), index = y*25 + x
+);
+
+    localparam WALL = 1'b0;
+    localparam PATH = 1'b1;
+
+    // handy indexer: idx(x,y) = y*25 + x
+    function automatic [9:0] idx;
+        input [4:0] x;
+        input [4:0] y;
+        begin
+            idx = y*10'd25 + x;
+        end
+    endfunction
+
+    // one-shot initializer
+    reg inited;
+
+    integer x, y;
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            inited <= 1'b0;
+            done   <= 1'b0;
+            maze   <= {625{1'b0}}; // default walls
+        end else if (!inited) begin
+            // ---------------------------
+            // 1) start with open interior
+            // ---------------------------
+            // outer border walls (0); interior set to PATH (1)
+            for (y = 0; y < 25; y = y + 1) begin
+                for (x = 0; x < 25; x = x + 1) begin
+                    if (x == 0 || x == 24 || y == 0 || y == 24)
+                        maze[idx(x,y)] <= WALL;
+                    else
+                        maze[idx(x,y)] <= PATH; // open interior by default
+                end
+            end
+
+            // -----------------------------------
+            // 2) carve some simple fixed wall runs
+            //    (keep gaps to ensure connectivity)
+            // -----------------------------------
+
+            // horizontal wall band near top (y=6), gap at x=12
+            for (x = 3; x <= 21; x = x + 1) begin
+                if (x != 12) maze[idx(x, 6)] <= WALL;
+            end
+
+            // vertical wall left side (x=6), gap at y=12
+            for (y = 8; y <= 20; y = y + 1) begin
+                if (y != 12) maze[idx(6, y)] <= WALL;
+            end
+
+            // vertical wall right side (x=18), gap at y=10
+            for (y = 4; y <= 18; y = y + 1) begin
+                if (y != 10) maze[idx(18, y)] <= WALL;
+            end
+
+            // small top-left cluster (y=3, x=4..8) with a gap at x=6
+            for (x = 4; x <= 8; x = x + 1) begin
+                if (x != 6) maze[idx(x, 3)] <= WALL;
+            end
+
+            // mid horizontal wall (y=12, x=8..16) with a gap at x=12
+            for (x = 8; x <= 16; x = x + 1) begin
+                if (x != 12) maze[idx(x, 12)] <= WALL;
+            end
+
+            // lower horizontal wall (y=18, x=4..22) with gaps at x=10 and x=16
+            for (x = 4; x <= 22; x = x + 1) begin
+                if (x != 10 && x != 16) maze[idx(x, 18)] <= WALL;
+            end
+
+            // diagonal-ish nubs to add a bit of texture
+            maze[idx(9, 9)]  <= WALL;
+            maze[idx(10, 10)]<= WALL;
+            maze[idx(11, 11)]<= WALL;
+
+            // ensure start (1,1) and treasure (23,23) are open
+            maze[idx(5'd1, 5'd1)]   <= PATH;
+            maze[idx(5'd23, 5'd23)] <= PATH;
+
+            // latch initialized
+            inited <= 1'b1;
+            done   <= 1'b1; // signal ready
+        end
+        else begin
+            // hold outputs
+            done <= 1'b1;
+        end
+    end
+
+endmodule
+`default_nettype wire
