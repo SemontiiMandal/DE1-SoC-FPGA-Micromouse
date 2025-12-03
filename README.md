@@ -5,7 +5,7 @@ A hardware-based maze navigation game implemented on the **DE1-SoC (Cyclone V) F
 The design uses FSM-driven control, PS/2 input decoding, VGA rendering, on-chip memory, audio playback, and a hardware countdown timer.
 
 ---
-# Note on Academic Policy:
+## Note on Academic Policy:
 
 This project was completed as part of ECE241 – Digital Systems at the University of Toronto.
 As per the course policy, source code cannot be publicly posted to prevent plagiarism in future years.
