@@ -10,10 +10,11 @@ The design uses FSM-driven control, PS/2 input decoding, VGA rendering, on-chip 
 This project was completed as part of ECE241 – Digital Systems at the University of Toronto.
 As per the course policy, source code cannot be publicly posted to prevent plagiarism in future years.
 
-If you would like to learn more about the design, architecture, or implementation details, please feel free to contact me directly, and I’d be happy to discuss the project!
+If you would like to learn more about the design and implementation details, please feel free to contact me directly, and I’d be happy to discuss the project!
+
+That being said, the following sections outline the project’s features, technical details, and overall hardware architecture.
 
 ---
-
 ## Features
 
 - Tile-based 2D maze at **640×480 @ 60Hz**
