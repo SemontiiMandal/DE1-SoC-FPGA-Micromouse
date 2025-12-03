@@ -101,11 +101,20 @@ Waveform analysis was used to verify:
 - Memory read/write timing relative to VGA scan
 
 ---
-
 ## Project Demo
+**Start Screen**
+<p align="center"> <img src="https://github.com/user-attachments/assets/16cb3c0c-b8eb-4812-b77e-6cbd7a8685d5" width="480"> </p>
 
-<img width="478" height="294" alt="image" src="https://github.com/user-attachments/assets/16cb3c0c-b8eb-4812-b77e-6cbd7a8685d5" />
+**Maze Screen**
+<p align="center"> <img src="https://github.com/user-attachments/assets/b46b0245-74bd-4f59-84a2-7eb551742e22" width="420"> </p>
 
-<img width="404" height="280" alt="image" src="https://github.com/user-attachments/assets/b46b0245-74bd-4f59-84a2-7eb551742e22" />
+**High-Level Block Diagram**
+<p align="center"> <img src="https://github.com/user-attachments/assets/578ed011-c720-429b-8d47-ff211af51b77" width="800"> </p>
 
-https://drive.google.com/file/d/1XJWmp2f3EBE5d46LysXajvJF4ft-UhSN/view
+**Demo Video**
+
+🔗 https://drive.google.com/file/d/1XJWmp2f3EBE5d46LysXajvJF4ft-UhSN/view
+
+**Final Presentation Slides**
+
+🔗 https://drive.google.com/file/d/19oJmUrXqgn0TVWOPY_k7Vsnctj13sHVR/view?usp=drive_link
